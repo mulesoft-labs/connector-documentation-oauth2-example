@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:oauth2example="http://www.mulesoft.org/schema/mule/oauth2example" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/oauth2example http://www.mulesoft.org/schema/mule/oauth2example/1.0-SNAPSHOT/mule-oauth2example.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <oauth2example:config name="OAuth_2_Example" apiKey="${foursquare.apikey}" apiSecret="${foursquare.apisecret}" doc:name="OAuth 2 Example">
+        <oauth2example:oauth-callback-config domain="localhost" localPort="8090" remotePort="8090" path="redirect"/>
+    </oauth2example:config>
+    <flow name="OAuth_2_Example_DemoFlow1" doc:name="OAuth_2_Example_DemoFlow1">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" doc:name="HTTP"/>
+        <oauth2example:authorize config-ref="OAuth_2_Example" doc:name="Authorize"/>
+        <logger message="I'm authenticated!" level="INFO" doc:name="Logger"/>
+        <oauth2example:users-get-list config-ref="OAuth_2_Example" doc:name="Users: GetLists"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+</mule>

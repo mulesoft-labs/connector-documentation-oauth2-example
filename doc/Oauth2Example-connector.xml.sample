@@ -1,0 +1,3 @@
+<!-- BEGIN_INCLUDE(oauth2example:users-get-list) -->
+    <oauth2example:users-get-list />
+<!-- END_INCLUDE(oauth2example:users-get-list) -->
